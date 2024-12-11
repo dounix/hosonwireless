@@ -1,16 +1,48 @@
-#Hoson PrintExp on a raspberry Pi
+#Hoson PrintExp wireless
 
-PrintExp(win32) is a program for Hoson n10 and other hoson print controller boards.
+PrintExp(win32) is a program for Hoson(hosonsoft) print controller boards.
 
-Hoson boards have their own control protocol, not listening on port 9100 directly.
+Hoson boards are used in DTF/DTG/Large format printers from China.
 
-PrintExp is the translator/configuration UI for Hoson Boards.
+PrintExp is the configuration/control/status UI for Hoson board.
+PrintExp also serves as the raw port listner TCP interface for your raster image processor(RIP), 
+The print job is sent to PrintExp(listening on 9100), not directly to the printer.
 
-It provides a configuration interface, and also listens on port 9100 on the hosting windows PC.
+The IP stack on Hoson boards is hardcoded to 192.168.127.10(ugh..), so not really an IP stack, but some Lync FPGA approximation.
+The customer is expected to dedicate a computer and network interface(with a static IP on in the 192.168.127.0/24 net) to this "dummy" network.
+The cable that is wired into the board appears to be a crossover, but that hasn't be verified.
 
+This makes multiple printers or non local printers somewhere between cumbersome and impossible.
+
+I wanted to print remotely, my printer is across my workshop.
+
+The solution, A miniPC(NUC spec or similar)  running some flavor of linuxn(raspberry Pi 5 had dropped connection during large print spooling)
+
+PrintExp works mostly fine in wine with default settings, without installing the strange Chinese VC runtimes required on windows.
 
 Things that don't work...
-When using a raspberry pi(and arm emulation of x86 vs hangover) there will be printing pauses
+As stated above, when using a raspberry pi(and arm emulation of x86 vs hangover) there will be printing pauses
+It's possible print calibration fails to print the number scale(likely font issue, may be resolved)
 
-Some fonts will be invisable unless these are present(available from Windows 10 fonts dir)
-msyh.ttc and simsun.ttc
+Menus with invisible text, resolved after finding the font collection dependancies.
+msyh.ttc and simsun.ttc from windows 10(winetricks doesn't seem to have these) added to wine c_drive/windows/Fonts
+
+
+Making it useful remote
+
+PrintExp only listens on localhost:9100 by default.
+Change project.ini in the PrintExp directory to listen on all interfaces(0.0.0.0)
+
+With a headless setup, remote display is nessessary.
+Speed and client ubiquity for RDP lead to xrdp
+
+install xrdp
+copy startwm.sh to the user home directory, and set execute bits.
+prespawn.service will run PrintExp before connecting via RDP, so spooling will work at boot.
+
+On windows make a shortcut to mstsc, setting the resolution is optional
+C:\Windows\System32\mstsc.exe /v dtf /w:1344 /h:806
+
+Set your RIP destination to ip of miniPC(or dns names if your RIP/network support it)  192.168.0.222:9100 
+
+If you can't get PrintExp working on windows, this will not fix that.
