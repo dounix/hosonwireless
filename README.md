@@ -21,6 +21,12 @@ The solution, A miniPC(NUC spec or similar)  running some flavor of linuxn(raspb
 PrintExp works mostly fine in wine with default settings, without installing the strange Chinese VC runtimes required on windows.
 
 Things that don't work...
+
+Going to the advanced/net settings crashes PrintExp, these settings are curious in any case.
+After getting wireless working, set your ethernet interface staticlly to 192.168.172.11/24, the above settings won't be needed
+
+The Adjust calibration instructions don't show in the window, I have this problem on windows 10 as well
+
 As stated above, when using a raspberry pi(and arm emulation of x86 vs hangover) there will be printing pauses
 It's possible print calibration fails to print the number scale(likely font issue, may be resolved)
 
