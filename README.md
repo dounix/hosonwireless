@@ -1,4 +1,4 @@
-#Hoson PrintExp wireless
+# Hoson PrintExp wireless
 
 PrintExp(win32) is a program for Hoson(hosonsoft) print controller boards.
 
