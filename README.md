@@ -52,3 +52,18 @@ C:\Windows\System32\mstsc.exe /v dtf /w:1344 /h:806
 Set your RIP destination to ip of miniPC(or dns names if your RIP/network support it)  192.168.0.222:9100 
 
 If you can't get PrintExp working on windows, this will not fix that.
+
+Automation
+wget https://catalog.s.download.windowsupdate.com/msdownload/update/software/updt/2009/10/windows-en-us-kb971513_c18df80f512a6d9cea206825b981e33c0973abec.exe
+
+wintricks winxp, which runs
+wine winecfg -v winxp
+ wine windows-en-us-kb971513_c18df80f512a6d9cea206825b981e33c0973abec.exe
+wintricks win10, which runs
+git clone https://github.com/blackrosezy/gui-inspect-tool
+wintricks win10
+https://www.python.org/ftp/python/3.11.9/python-3.11.9.exe
+wine pip install pywinauto
+wine python -m pip install --upgrade pip
+wine pip install pywinauto keyboard
+
